@@ -12,36 +12,38 @@
               msvc环境下编译ffmpeg代码，获取到的avformat.dll中有函数API   av_ffurl_register_protocol()可以调用
 
    方案二 ：  修改Makefile, 添加url.h  
-   ```
-   /libavformat/Makefile  ,    
+   文件路径 /libavformat/Makefile  ,     
+   ```  
    HEADERS = avformat.h avio.h url.h version.h    
    OBJS = allformats.o         \     
    cutils.o             \   
    
   ```
-  修改文件     /libavformat/libavformat.v 文件
-               LIBAVFORMAT_$MAJOR {
-        global: av*;
-                #FIXME those are for ffserver
-                ffurl_register_protocol ;
-                ff_inet_aton;
-                ff_socket_nonblock;
-                ff_rtsp_parse_line;
-                ff_rtp_get_local_rtp_port;
-                ff_rtp_get_local_rtcp_port;
-                ffio_open_dyn_packet_buf;
-                ffio_set_buf_size;
-                ffurl_close;
-                ffurl_open;
-                ffurl_read_complete;
-                ffurl_seek;
-                ffurl_size;
-                ffurl_write;
-                #those are deprecated, remove on next bump
-                url_feof;
-        local: *;
-};
+  修改文件     /libavformat/libavformat.v 文件    
+  ```
+    LIBAVFORMAT_$MAJOR {   
+        global: av*;   
+                #FIXME those are for ffserver   
+                ffurl_register_protocol ;   
+                ff_inet_aton;   
+                ff_socket_nonblock;   
+                ff_rtsp_parse_line;   
+                ff_rtp_get_local_rtp_port;   
+                ff_rtp_get_local_rtcp_port;   
+                ffio_open_dyn_packet_buf;   
+                ffio_set_buf_size;   
+                ffurl_close;   
+                ffurl_open;   
+                ffurl_read_complete;   
+                ffurl_seek;   
+                ffurl_size;   
+                ffurl_write;   
+                #those are deprecated, remove on next bump   
+                url_feof;   
+        local: *;   
+};   
+```
 
-                       重新进行编译，avformat.dll 中获取到函数 ffurl_register_protocol ()
+重新进行编译，avformat.dll 中获取到函数 ffurl_register_protocol ()
 
 目前来看，方案二更优
