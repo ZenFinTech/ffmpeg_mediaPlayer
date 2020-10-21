@@ -1,4 +1,4 @@
-## ffurl_register_protocol for example
+## 添加私有的编解码协议方法
 
 在MSVC环境下编译ffmpeg，目的是在dll中获取到 ffurl_register_protocol 函数。    
    目前采取了2个方案，都可以达到这个目的 ：    
