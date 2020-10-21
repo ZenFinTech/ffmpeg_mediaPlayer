@@ -1,17 +1,17 @@
 ## ffurl_register_protocol for example
 
-1. 在MSVC环境下编译ffmpeg，目的是在dll中获取到 ffurl_register_protocol 函数。    
+在MSVC环境下编译ffmpeg，目的是在dll中获取到 ffurl_register_protocol 函数。    
    目前采取了2个方案，都可以达到这个目的 ：    
-   方案一 ： 修改代码 ， 在 libavformat/allformat.h ， av_register_all() 后面添加 av_ffurl_register_protocol(URLProtocol *protocol, int size)声明在 libavformat/allformats.c , av_register_all() 后面添加实现        
-   ```C
+方案1 ： 修改代码 ， 在 libavformat/allformat.h ， av_register_all() 后面添加 av_ffurl_register_protocol(URLProtocol *protocol, int size)声明在 libavformat/allformats.c , av_register_all() 后面添加实现        
+   ```
       int av_ffurl_register_protocol(URLProtocol *protocol, int size)   
       {   
          return ffurl_register_protocol( protocol, size );    
       }
     ```
-              msvc环境下编译ffmpeg代码，获取到的avformat.dll中有函数API   av_ffurl_register_protocol()可以调用
+  msvc环境下编译ffmpeg代码，获取到的avformat.dll中有函数API   av_ffurl_register_protocol()可以调用
 
-   方案二 ：  修改Makefile, 添加url.h  
+方案2 ：  修改Makefile, 添加url.h  
    文件路径 /libavformat/Makefile  ,     
    ```  
    HEADERS = avformat.h avio.h url.h version.h    
