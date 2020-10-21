@@ -1,9 +1,8 @@
 ## ffurl_register_protocol for example
 
 1. 在MSVC环境下编译ffmpeg，目的是在dll中获取到 ffurl_register_protocol 函数。    
-   目前采取了2个办法，都可以达到这个目的 ：    
-   方案一 ： 修改代码 ， 在 libavformat/allformat.h ， av_register_all() 后面添加 av_ffurl_register_protocol(URLProtocol *protocol, int size)声明      
-           在 libavformat/allformats.c , av_register_all() 后面添加实现        
+   目前采取了2个方案，都可以达到这个目的 ：    
+   方案一 ： 修改代码 ， 在 libavformat/allformat.h ， av_register_all() 后面添加 av_ffurl_register_protocol(URLProtocol *protocol, int size)声明在 libavformat/allformats.c , av_register_all() 后面添加实现        
    ```C
       int av_ffurl_register_protocol(URLProtocol *protocol, int size)   
       {   
@@ -12,11 +11,15 @@
     ```
               msvc环境下编译ffmpeg代码，获取到的avformat.dll中有函数API   av_ffurl_register_protocol()可以调用
 
-   方案二 ：  修改Makefile  /libavformat/Makefile  , 
-                           HEADERS = avformat.h avio.h url.h version.h
-                           OBJS = allformats.o         \
-                           cutils.o             \
-              修改文件     /libavformat/libavformat.v 文件
+   方案二 ：  修改Makefile, 添加url.h  
+   ```
+   /libavformat/Makefile  ,    
+   HEADERS = avformat.h avio.h url.h version.h    
+   OBJS = allformats.o         \     
+   cutils.o             \   
+   
+  ```
+  修改文件     /libavformat/libavformat.v 文件
                LIBAVFORMAT_$MAJOR {
         global: av*;
                 #FIXME those are for ffserver
