@@ -48,4 +48,5 @@
 
 重新进行编译，avformat.dll 中获取到函数 ffurl_register_protocol ()
 
+## 对比结论
 目前来看，方案二更优
